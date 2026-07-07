@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jonester Villanueva · Portfolio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #050505;
+        color: #ececec;
+        font-family: "Space Grotesk", sans-serif;
+        line-height: 1.5;
+        overflow-x: hidden;
+      }
+
+      /* ===== HEADER ===== */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 1.2rem 5%;
+        background: transparent;
+        transition:
+          background 0.4s,
+          backdrop-filter 0.4s;
+      }
+      header.scrolled {
+        background: rgba(5, 5, 5, 0.92);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo a {
+        font-size: 1.7rem;
+        font-weight: 600;
+        color: #fff;
+        text-decoration: none;
+        letter-spacing: -0.5px;
+        font-family: "Space Grotesk", sans-serif;
+      }
+      .logo a span {
+        color: #888;
+        font-weight: 300;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.4rem;
+        list-style: none;
+      }
+      .nav-links a {
+        text-decoration: none;
+        font-size: 0.75rem;
+        letter-spacing: 1.6px;
+        text-transform: uppercase;
+        color: #ccc;
+        font-family: "DM Mono", monospace;
+        transition: 0.3s;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: #fff;
+        transition: width 0.3s ease;
+      }
+      .nav-links a:hover {
+        color: #fff;
+      }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      /* ===== HERO WITH SLIDING ROWS ===== */
+      .hero {
+        position: relative;
+        height: 100vh;
+        min-height: 720px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        background: #080808;
+        overflow: hidden;
+        padding-top: 70px;
+      }
+
+      .hero-rows {
+        width: 100%;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 0.2rem 0 0.6rem;
+        z-index: 2;
+        position: relative;
+        opacity: 0.7;
+        margin-top: -0.4rem;
+      }
+
+      .row-wrapper {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        padding: 0.5rem 0;
+        background: rgba(0, 0, 0, 0.15);
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .row-wrapper:first-of-type {
+        border-top: none;
+      }
+      .row-wrapper:last-of-type {
+        border-bottom: none;
+      }
+
+      .row-track {
+        display: flex;
+        gap: 1.4rem;
+        width: fit-content;
+        will-change: transform;
+      }
+
+      .row-track.right-to-left {
+        animation: slideRightToLeft 42s linear infinite;
+      }
+      .row-track.left-to-right {
+        animation: slideLeftToRight 48s linear infinite;
+      }
+      .row-track.right-to-left-slow {
+        animation: slideRightToLeft 54s linear infinite;
+      }
+
+      @keyframes slideRightToLeft {
+        0% {
+          transform: translateX(0%);
+        }
+        100% {
+          transform: translateX(-48%);
+        }
+      }
+      @keyframes slideLeftToRight {
+        0% {
+          transform: translateX(-48%);
+        }
+        100% {
+          transform: translateX(0%);
+        }
+      }
+
+      .row-wrapper:hover .row-track {
+        animation-play-state: paused;
+      }
+
+      .project-card {
+        flex-shrink: 0;
+        width: 280px;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        cursor: default;
+        background: transparent;
+        border: none;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      }
+      .project-card:hover {
+        transform: scale(1.06);
+      }
+      .project-card img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        display: block;
+        background: #1a1a1a;
+        border-radius: 12px;
+      }
+
+      /* ===== SECTION: ABOUT (profile image left / about right) ===== */
+      .about-section {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 4.5rem 2rem 5.5rem;
+        border-top: 1px solid #1a1a1a;
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3.5rem;
+        align-items: center;
+      }
+
+      /* profile — left (image only) - LARGER */
+      .profile-card {
+        background: transparent;
+        border: none;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .profile-avatar {
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background: #1a1a1a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid #2a2a2a;
+        transition:
+          border-color 0.3s,
+          transform 0.3s;
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+      .profile-avatar:hover {
+        border-color: #777;
+        transform: scale(1.02);
+      }
+      .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .profile-avatar .fallback-icon {
+        font-size: 7rem;
+        color: #666;
+        display: none;
+      }
+      .profile-avatar img:not([src]),
+      .profile-avatar img[src=""],
+      .profile-avatar img[src="#"] {
+        display: none;
+      }
+      .profile-avatar img:not([src]) + .fallback-icon,
+      .profile-avatar img[src=""] + .fallback-icon,
+      .profile-avatar img[src="#"] + .fallback-icon {
+        display: block;
+      }
+
+      /* about — right */
+      .about-text h2 {
+        font-size: 3.2rem;
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: -0.02em;
+      }
+      .about-text h2 span {
+        color: #666;
+        font-weight: 300;
+      }
+      .about-text p {
+        color: #bbb;
+        font-size: 1.15rem;
+        line-height: 1.75;
+        margin-top: 1.3rem;
+        max-width: 540px;
+      }
+      .about-text .highlight {
+        color: #fff;
+        font-weight: 500;
+      }
+      .about-text .note {
+        margin-top: 1.1rem;
+        font-size: 1rem;
+        color: #888;
+      }
+
+      @media (max-width: 780px) {
+        .nav-links {
+          display: none;
+        }
+        .project-card {
+          width: 210px;
+        }
+        .hero {
+          min-height: 600px;
+          padding-top: 60px;
+        }
+        .hero-rows {
+          margin-top: -0.2rem;
+        }
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 2.2rem;
+        }
+        .about-text p {
+          max-width: 100%;
+        }
+        .about-text h2 {
+          font-size: 2.4rem;
+        }
+        .row-wrapper {
+          padding: 0.3rem 0;
+        }
+        .hero-rows {
+          gap: 0.3rem;
+        }
+        .profile-avatar {
+          width: 220px;
+          height: 220px;
+        }
+        .profile-card {
+          justify-content: center;
+        }
+        .profile-avatar .fallback-icon {
+          font-size: 5rem;
+        }
+      }
+      @media (max-width: 480px) {
+        .project-card {
+          width: 160px;
+        }
+        .hero {
+          min-height: 520px;
+          padding-top: 55px;
+        }
+        .hero-rows {
+          margin-top: 0rem;
+        }
+        .profile-avatar {
+          width: 180px;
+          height: 180px;
+        }
+        .profile-avatar .fallback-icon {
+          font-size: 4rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== HEADER ===== -->
+    <header id="mainHeader">
+      <div class="nav-container">
+        <div class="logo">
+          <a href="#">JONES<span>TER</span></a>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="work">
+      <div class="hero-rows">
+        <div class="row-wrapper">
+          <div class="row-track right-to-left" id="row1"></div>
+        </div>
+        <div class="row-wrapper">
+          <div class="row-track left-to-right" id="row2"></div>
+        </div>
+        <div class="row-wrapper">
+          <div class="row-track right-to-left-slow" id="row3"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT: profile image left / about right ===== -->
+    <section class="about-section" id="about">
+      <div class="about-grid">
+        <!-- LEFT: Profile image - LARGER -->
+        <div class="profile-card">
+          <div class="profile-avatar">
+            <img src="Bprofile.jpg" alt="Jonester Villanueva" />
+            <i class="fas fa-user-astronaut fallback-icon"></i>
+          </div>
+        </div>
+
+        <!-- RIGHT: About text -->
+        <div class="about-text">
+          <h2>About <span>Me</span></h2>
+          <p>
+            I'm <span class="highlight">Jonester Villanueva</span>, a developer
+            with a deep passion for
+            <span class="highlight">game development</span> and
+            <span class="highlight">web development</span>. I love bringing
+            ideas to life — whether it's an immersive game world or a sleek,
+            interactive web experience.
+          </p>
+          <p class="note">
+            <i
+              class="fas fa-arrow-right"
+              style="color: #555; margin-right: 8px"
+            ></i>
+            Currently exploring: Unity, Roblox Lua, React, and creative coding.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      (function () {
+        const images = [
+          "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1825&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1535016120720-40c646be5580?q=80&w=2070&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1541150396515-4b60b5d0644d?q=80&w=2070&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=2070&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?q=80&w=1887&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1531256379416-b7e8d587f9e5?q=80&w=1887&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1794&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1759&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1559000356-1c8911f8a8f3?q=80&w=1887&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?q=80&w=1769&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?q=80&w=1887&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1825&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop",
+        ];
+
+        function buildRow(containerId, startIndex = 0) {
+          const container = document.getElementById(containerId);
+          if (!container) return;
+          container.innerHTML = "";
+          const items = [...images, ...images, ...images];
+          const offset = startIndex % items.length;
+          for (let i = 0; i < 22; i++) {
+            const idx = (offset + i) % items.length;
+            const src = items[idx];
+            const card = document.createElement("div");
+            card.className = "project-card";
+            card.innerHTML = `<img src="${src}" alt="project" loading="lazy" />`;
+            container.appendChild(card);
+          }
+        }
+
+        buildRow("row1", 0);
+        buildRow("row2", 4);
+        buildRow("row3", 8);
+
+        const header = document.getElementById("mainHeader");
+        window.addEventListener("scroll", () => {
+          header.classList.toggle("scrolled", window.scrollY > 30);
+        });
+
+        document.querySelectorAll(".nav-links a").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const target = document.querySelector(link.getAttribute("href"));
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
