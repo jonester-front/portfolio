@@ -1,0 +1,1545 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jonester Villanueva · Portfolio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="icon" type="pp.jpg" href="pp.jpg" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: #090909;
+        color: #e8e8e8;
+        font-family:
+          "Inter",
+          -apple-system,
+          sans-serif;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ===== HEADER ===== */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 1.8rem 5%;
+        background: transparent;
+        transition: all 0.4s ease;
+      }
+      header.scrolled {
+        background: rgba(9, 9, 9, 0.92);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        padding: 1rem 5%;
+      }
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .logo a {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        letter-spacing: -0.3px;
+        transition: opacity 0.3s;
+      }
+      .logo a:hover {
+        opacity: 0.7;
+      }
+      .logo a span {
+        color: #444;
+        font-weight: 300;
+      }
+
+      /* ===== NAV LINKS ===== */
+      .nav-links {
+        display: flex;
+        gap: 2.8rem;
+        list-style: none;
+      }
+      .nav-links a {
+        text-decoration: none;
+        font-size: 0.6rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #666;
+        font-weight: 500;
+        transition: color 0.3s;
+        font-family: "JetBrains Mono", monospace;
+        position: relative;
+        cursor: pointer;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: #fff;
+        transition: width 0.3s ease;
+      }
+      .nav-links a:hover {
+        color: #fff;
+      }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      /* ===== HAMBURGER MENU ===== */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        z-index: 1001;
+        padding: 5px;
+      }
+      .hamburger span {
+        display: block;
+        width: 25px;
+        height: 2px;
+        background: #e8e8e8;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+      }
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+      /* ===== MOBILE OVERLAY ===== */
+      .mobile-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 998;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+      .mobile-overlay.open {
+        display: block;
+        opacity: 1;
+      }
+
+      /* ===== MOBILE DRAWER ===== */
+      .mobile-drawer {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: rgba(9, 9, 9, 0.98);
+        backdrop-filter: blur(20px);
+        z-index: 999;
+        padding: 6rem 2rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .mobile-drawer.open {
+        right: 0;
+      }
+      .mobile-drawer a {
+        text-decoration: none;
+        font-size: 1rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #666;
+        font-weight: 500;
+        transition: color 0.3s;
+        font-family: "JetBrains Mono", monospace;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        cursor: pointer;
+      }
+      .mobile-drawer a:hover {
+        color: #fff;
+        padding-left: 0.5rem;
+      }
+      .mobile-drawer .drawer-socials {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .mobile-drawer .drawer-socials a {
+        color: #444;
+        font-size: 1.1rem;
+        border-bottom: none;
+        padding: 0;
+      }
+      .mobile-drawer .drawer-socials a:hover {
+        color: #fff;
+        padding-left: 0;
+        transform: translateY(-2px);
+      }
+
+      /* ===== ABOUT SECTION ===== */
+      .about-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 8rem 2rem 4rem;
+        border-bottom: 1px solid #121212;
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.6fr;
+        gap: 4.5rem;
+        align-items: center;
+      }
+      .profile-wrapper {
+        display: flex;
+        justify-content: center;
+      }
+      .profile-avatar {
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #121212;
+        border: 2px solid #1a1a1a;
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        position: relative;
+        cursor: pointer;
+      }
+      .profile-avatar::after {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.05),
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+      .profile-avatar:hover {
+        border-color: #444;
+        transform: scale(1.02);
+        box-shadow: 0 0 60px rgba(255, 255, 255, 0.03);
+      }
+      .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: opacity 0.4s ease;
+      }
+      .profile-avatar .fallback {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 5.5rem;
+        color: #2a2a2a;
+      }
+
+      .about-text .bio {
+        color: #999;
+        font-size: 0.95rem;
+        line-height: 1.8;
+        margin-top: 1.2rem;
+        max-width: 520px;
+        text-align: left;
+      }
+      .about-text .bio .highlight {
+        color: #fff;
+        font-weight: 500;
+      }
+
+      /* Typing animation for the first line */
+      .typing-wrapper {
+        display: inline-block;
+        font-size: 0.95rem;
+        color: #fff;
+        font-weight: 500;
+        border-right: 2px solid #666;
+        padding-right: 4px;
+        animation: blink-caret 0.8s step-end infinite;
+        text-align: left;
+      }
+      @keyframes blink-caret {
+        0%,
+        100% {
+          border-color: #666;
+        }
+        50% {
+          border-color: transparent;
+        }
+      }
+
+      .about-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.8rem;
+        justify-content: flex-start;
+      }
+      .about-tags span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.3px;
+        color: #666;
+        background: #111;
+        padding: 0.3rem 1rem;
+        border-radius: 100px;
+        border: 1px solid #1a1a1a;
+        transition: all 0.3s ease;
+      }
+      .about-tags span:hover {
+        color: #fff;
+        border-color: #444;
+        background: #181818;
+      }
+
+      .about-socials {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2.2rem;
+        padding-top: 1.8rem;
+        border-top: 1px solid #141414;
+        justify-content: flex-start;
+      }
+      .about-socials a {
+        color: #444;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      .about-socials a:hover {
+        color: #fff;
+        transform: translateY(-3px);
+      }
+
+      /* ===== SLIDING ROWS ===== */
+      .hero-rows {
+        width: 100%;
+        min-height: 60vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #090909;
+        padding: 3rem 2rem 2rem;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 1px solid #121212;
+      }
+
+      .hero-rows::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 800px;
+        height: 800px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.02) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .row-wrapper {
+        width: 100%;
+        overflow: hidden;
+        padding: 0.6rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.02);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        position: relative;
+        z-index: 2;
+      }
+      .row-wrapper:first-of-type {
+        border-top: none;
+      }
+      .row-wrapper:last-of-type {
+        border-bottom: none;
+      }
+      .row-track {
+        display: flex;
+        gap: 0.8rem;
+        width: fit-content;
+        will-change: transform;
+      }
+      .row-track.right-to-left {
+        animation: slideRightToLeft 60s linear infinite;
+      }
+      .row-track.left-to-right {
+        animation: slideLeftToRight 60s linear infinite;
+      }
+      .row-track.right-to-left-slow {
+        animation: slideRightToLeft 60s linear infinite;
+      }
+      @keyframes slideRightToLeft {
+        0% {
+          transform: translateX(0%);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      @keyframes slideLeftToRight {
+        0% {
+          transform: translateX(-50%);
+        }
+        100% {
+          transform: translateX(0%);
+        }
+      }
+
+      .project-card {
+        flex-shrink: 0;
+        width: 180px;
+        border-radius: 6px;
+        overflow: hidden;
+        background: transparent;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+      .project-card:hover {
+        transform: scale(1.03);
+      }
+      .project-card img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        display: block;
+        background: #121212;
+        border-radius: 6px;
+        filter: grayscale(0);
+        transition: none;
+        pointer-events: none;
+      }
+
+      /* ===== PROJECTS SECTION ===== */
+      .projects-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 5rem 2rem 4rem;
+        border-bottom: 1px solid #121212;
+      }
+
+      .section-heading {
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: #fff;
+        letter-spacing: -0.02em;
+        margin-bottom: 3rem;
+        font-family: "JetBrains Mono", monospace;
+        text-align: left;
+      }
+
+      .project-item {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+        margin-bottom: 4rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #101010;
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.9s cubic-bezier(0.23, 1, 0.32, 1),
+          transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .project-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .project-item:nth-child(odd) .project-image {
+        order: 2;
+      }
+      .project-item:nth-child(odd) .project-content {
+        order: 1;
+      }
+
+      .project-item:nth-child(even) .project-image {
+        order: 1;
+      }
+      .project-item:nth-child(even) .project-content {
+        order: 2;
+      }
+
+      .project-image {
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #111;
+        aspect-ratio: 16/10;
+        border: 1px solid #1a1a1a;
+        transition: all 0.4s ease;
+        position: relative;
+        cursor: pointer;
+      }
+      .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(0.15);
+        transition:
+          filter 0.6s ease,
+          transform 0.6s ease;
+        pointer-events: none;
+      }
+      .project-image:hover img {
+        filter: grayscale(0);
+        transform: scale(1.02);
+      }
+
+      .live-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(8px);
+        padding: 0.3rem 0.9rem;
+        border-radius: 40px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.5rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #4ade80;
+        border: 1px solid rgba(74, 222, 128, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .live-badge i {
+        font-size: 0.4rem;
+        color: #4ade80;
+      }
+
+      .project-content {
+        text-align: left;
+      }
+      .project-content h3 {
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: #fff;
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+        text-align: left;
+      }
+      .project-content .project-tag {
+        display: inline-block;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.55rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #888;
+        background: #141414;
+        padding: 0.15rem 0.9rem;
+        border-radius: 40px;
+        border: 1px solid #1f1f1f;
+        margin-bottom: 0.8rem;
+      }
+      .project-content p {
+        color: #999;
+        font-size: 0.85rem;
+        line-height: 1.7;
+        max-width: 460px;
+        text-align: left;
+      }
+      .project-content .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 1.2rem;
+        justify-content: flex-start;
+      }
+      .project-content .tech-stack span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.55rem;
+        color: #555;
+        background: #0f0f0f;
+        padding: 0.2rem 0.9rem;
+        border-radius: 40px;
+        border: 1px solid #1a1a1a;
+      }
+
+      .project-link-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1.2rem;
+        padding: 0.5rem 1.3rem;
+        color: #fff;
+        background: #181818;
+        border: 1px solid #2a2a2a;
+        border-radius: 40px;
+        text-decoration: none;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      .project-link-btn:hover {
+        background: #2a2a2a;
+        border-color: #444;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+      }
+      .project-link-btn i {
+        font-size: 0.65rem;
+        transition: transform 0.3s ease;
+      }
+      .project-link-btn:hover i {
+        transform: translateX(4px);
+      }
+
+      /* ===== GALLERY OVERLAY ===== */
+      .gallery-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        backdrop-filter: blur(20px);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+      .gallery-overlay.open {
+        display: flex;
+        opacity: 1;
+      }
+      .gallery-overlay .gallery-content {
+        position: relative;
+        max-width: 900px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .gallery-overlay .gallery-image {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: contain;
+        border-radius: 12px;
+        background: #0a0a0a;
+        border: 1px solid #222;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      }
+      .gallery-overlay .gallery-counter {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        color: #666;
+        margin-top: 1rem;
+        letter-spacing: 2px;
+      }
+      .gallery-overlay .gallery-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid #2a2a2a;
+        color: #ccc;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(8px);
+        z-index: 10;
+      }
+      .gallery-overlay .gallery-nav:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #555;
+        color: #fff;
+      }
+      .gallery-overlay .gallery-nav.prev {
+        left: -70px;
+      }
+      .gallery-overlay .gallery-nav.next {
+        right: -70px;
+      }
+      .gallery-overlay .close-gallery {
+        position: absolute;
+        top: -50px;
+        right: 0;
+        background: none;
+        border: none;
+        color: #666;
+        font-size: 1.6rem;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        font-family: "Inter", sans-serif;
+      }
+      .gallery-overlay .close-gallery:hover {
+        color: #fff;
+      }
+      @media (max-width: 820px) {
+        .gallery-overlay .gallery-nav.prev {
+          left: 10px;
+        }
+        .gallery-overlay .gallery-nav.next {
+          right: 10px;
+        }
+        .gallery-overlay .close-gallery {
+          top: -40px;
+          right: 0;
+          font-size: 1.3rem;
+        }
+        .gallery-overlay .gallery-nav {
+          width: 36px;
+          height: 36px;
+          font-size: 0.9rem;
+        }
+      }
+
+      /* ===== CONTACT / FOOTER ===== */
+      .footer {
+        padding: 2.5rem 2rem;
+        border-top: 1px solid #121212;
+        text-align: center;
+        background: #060606;
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #141414;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        color: #666;
+        font-size: 0.8rem;
+        font-family: "JetBrains Mono", monospace;
+        transition: color 0.3s ease;
+        text-decoration: none;
+      }
+      .contact-item:hover {
+        color: #fff;
+      }
+      .contact-item i {
+        font-size: 1rem;
+        color: #444;
+        transition: color 0.3s ease;
+      }
+      .contact-item:hover i {
+        color: #fff;
+      }
+
+      .footer-socials {
+        display: flex;
+        justify-content: center;
+        gap: 1.8rem;
+        margin-bottom: 1.2rem;
+        flex-wrap: wrap;
+      }
+      .footer-socials a {
+        color: #444;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+      .footer-socials a:hover {
+        color: #fff;
+        transform: translateY(-2px);
+      }
+      .footer p {
+        font-size: 0.65rem;
+        color: #333;
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 0.5px;
+      }
+      .footer p i {
+        color: #2a2a2a;
+        font-size: 0.5rem;
+      }
+
+      /* ===== SCROLL PADDING ===== */
+      .scroll-target {
+        scroll-margin-top: 80px;
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 820px) {
+        .nav-links {
+          gap: 1.8rem;
+        }
+        .project-item {
+          grid-template-columns: 1fr;
+          gap: 1.8rem;
+          text-align: left;
+        }
+        .project-item:nth-child(odd) .project-image,
+        .project-item:nth-child(even) .project-image {
+          order: 1;
+        }
+        .project-item:nth-child(odd) .project-content,
+        .project-item:nth-child(even) .project-content {
+          order: 2;
+        }
+        .project-content p {
+          max-width: 100%;
+          text-align: left;
+        }
+        .project-content .tech-stack {
+          justify-content: flex-start;
+        }
+        .project-link-btn {
+          justify-content: flex-start;
+        }
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+          text-align: left;
+        }
+        .about-text .bio {
+          max-width: 100%;
+          text-align: left;
+        }
+        .about-tags {
+          justify-content: flex-start;
+        }
+        .about-socials {
+          justify-content: flex-start;
+        }
+        .profile-avatar {
+          width: 200px;
+          height: 200px;
+        }
+        .profile-wrapper {
+          justify-content: center;
+        }
+        .hero-rows {
+          padding: 3rem 1.5rem 1.5rem;
+          min-height: 50vh;
+        }
+        .about-section {
+          padding: 7rem 1.5rem 3rem;
+        }
+        .projects-section {
+          padding: 3rem 1.5rem 2rem;
+        }
+        .scroll-target {
+          scroll-margin-top: 70px;
+        }
+        .contact-info {
+          gap: 1.2rem;
+        }
+        .contact-item {
+          font-size: 0.7rem;
+        }
+        .live-badge {
+          font-size: 0.45rem;
+          padding: 0.25rem 0.7rem;
+        }
+        .section-heading {
+          text-align: left;
+        }
+        .project-content h3 {
+          text-align: left;
+        }
+        .project-content {
+          text-align: left;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .project-card {
+          width: 120px;
+        }
+
+        .hamburger {
+          display: flex;
+        }
+        .nav-links {
+          display: none;
+        }
+
+        .about-section {
+          padding: 6rem 1.5rem 2.5rem;
+        }
+        .about-socials {
+          gap: 1.5rem;
+          justify-content: flex-start;
+        }
+        .about-socials a {
+          font-size: 1rem;
+        }
+        .profile-avatar {
+          width: 150px;
+          height: 150px;
+        }
+        .footer-socials {
+          gap: 1.2rem;
+        }
+        .hero-rows {
+          padding: 2rem 1rem 1rem;
+          min-height: 40vh;
+        }
+        .row-wrapper {
+          padding: 0.4rem 0;
+        }
+        .section-heading {
+          font-size: 1.1rem;
+          text-align: left;
+        }
+        .scroll-target {
+          scroll-margin-top: 60px;
+        }
+        .contact-info {
+          flex-direction: column;
+          gap: 0.8rem;
+          align-items: center;
+        }
+        .contact-item {
+          font-size: 0.65rem;
+        }
+        .live-badge {
+          font-size: 0.4rem;
+          padding: 0.2rem 0.5rem;
+          top: 8px;
+          right: 8px;
+        }
+        .project-link-btn {
+          font-size: 0.6rem;
+          padding: 0.4rem 1rem;
+          justify-content: flex-start;
+        }
+        .gallery-overlay .gallery-nav {
+          width: 28px;
+          height: 28px;
+          font-size: 0.7rem;
+        }
+        .about-text .bio {
+          font-size: 0.85rem;
+          text-align: left;
+        }
+        .typing-wrapper {
+          font-size: 0.85rem;
+          text-align: left;
+        }
+        .project-content p {
+          font-size: 0.8rem;
+          text-align: left;
+        }
+        .project-content h3 {
+          text-align: left;
+        }
+        .project-content .tech-stack {
+          justify-content: flex-start;
+        }
+        .project-content {
+          text-align: left;
+        }
+        .about-tags {
+          justify-content: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header id="mainHeader">
+      <div class="nav-container">
+        <div class="logo">
+          <a href="#">JONES<span>TER</span></a>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- MOBILE OVERLAY -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- MOBILE DRAWER -->
+    <div class="mobile-drawer" id="mobileDrawer">
+      <a href="#about" class="mobile-link">About</a>
+      <a href="#projects" class="mobile-link">Projects</a>
+      <a href="#contact" class="mobile-link">Contact</a>
+      <div class="drawer-socials">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section class="about-section scroll-target" id="about">
+      <div class="about-grid">
+        <div class="profile-wrapper">
+          <div class="profile-avatar" id="profileAvatar">
+            <img src="pp.jpg" alt="Jonester Villanueva" id="profileImg" />
+            <div class="fallback"><i class="fas fa-user-astronaut"></i></div>
+          </div>
+        </div>
+        <div class="about-text">
+          <p class="bio">
+            <span class="typing-wrapper" id="typingText"
+              >Jonester Villanueva</span
+            >
+            <br />
+            <span class="highlight"
+              >Bachelor of Science in Information Technology</span
+            >
+            graduate with a strong interest in
+            <span class="highlight">web development</span> and
+            <span class="highlight">game development</span>. Passionate about
+            creating responsive web applications and exploring game development
+            technologies. Eager to learn new skills, take on new challenges, and
+            contribute to meaningful projects while continuously growing as a
+            developer.
+          </p>
+          <div class="about-tags">
+            <span>PHP</span>
+            <span>JavaScript</span>
+            <span>HTML & CSS</span>
+            <span>Tailwind CSS</span>
+            <span>MySQL</span>
+            <span>Lua (Basic)</span>
+            <span>Blender (Basic)</span>
+          </div>
+          <div class="about-socials">
+            <a href="#" aria-label="Facebook"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" aria-label="LinkedIn"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDING ROWS: Row1 = Thesis (t1-t10), Row2 = Blender (b1-b17), Row3 = Biagtan (bm1-bm5) -->
+    <section class="hero-rows" id="work">
+      <div class="row-wrapper">
+        <div class="row-track right-to-left" id="row1"></div>
+      </div>
+      <div class="row-wrapper">
+        <div class="row-track left-to-right" id="row2"></div>
+      </div>
+      <div class="row-wrapper">
+        <div class="row-track right-to-left-slow" id="row3"></div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section class="projects-section scroll-target" id="projects">
+      <h2 class="section-heading">projects</h2>
+
+      <!-- Project 1: Blender Gallery -->
+      <div class="project-item" data-fade="up">
+        <div class="project-image" id="blenderGalleryTrigger">
+          <img
+            src="b1.png"
+            alt="Blender Gallery"
+            loading="lazy"
+            id="blenderGalleryPreview"
+          />
+          <div class="live-badge" style="pointer-events: none">
+            <i class="fas fa-images"></i> Gallery
+          </div>
+        </div>
+        <div class="project-content">
+          <span class="project-tag">3D · Blender</span>
+          <h3>Blender Renders</h3>
+          <p>
+            A collection of 17 Blender projects showcasing my learning journey
+            in 3D modeling, basic texturing, lighting, and rendering.
+          </p>
+          <div class="tech-stack">
+            <span>Blender</span>
+            <span>Cycles</span>
+            <span>Eevee</span>
+          </div>
+          <button class="project-link-btn" id="openGalleryBtn">
+            <i class="fas fa-images"></i> Open Gallery
+          </button>
+        </div>
+      </div>
+
+      <!-- Project 2: Biagtan (Live) -->
+      <div class="project-item" data-fade="down">
+        <div class="project-image" id="biagtanGalleryTrigger">
+          <img
+            src="bm1.png"
+            alt="Biagtan Project"
+            loading="lazy"
+            id="biagtanGalleryPreview"
+          />
+          <div class="live-badge"><i class="fas fa-circle"></i> Live</div>
+        </div>
+        <div class="project-content">
+          <span class="project-tag">Web Development</span>
+          <h3>Biagtan</h3>
+          <p>
+            A modern, responsive web project built with clean design principles
+            and interactive elements. Showcases my approach to creating engaging
+            user experiences.
+          </p>
+          <div class="tech-stack">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>Tailwind CSS</span>
+            <span>JavaScript</span>
+          </div>
+          <button class="project-link-btn" id="openBiagtanGalleryBtn">
+            <i class="fas fa-images"></i> Open Biagtan Gallery
+          </button>
+          <a
+            href="https://jonester-front.github.io/biagtan/"
+            target="_blank"
+            class="project-link-btn"
+            style="margin-left: 0.5rem"
+          >
+            View Live <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 3: Thesis Project -->
+      <div class="project-item" data-fade="up">
+        <div class="project-image" id="thesisGalleryTrigger">
+          <img
+            src="t1.png"
+            alt="Thesis Project"
+            loading="lazy"
+            id="thesisGalleryPreview"
+          />
+          <div class="live-badge" style="pointer-events: none">
+            <i class="fas fa-images"></i> Gallery
+          </div>
+        </div>
+        <div class="project-content">
+          <span class="project-tag">Web Development</span>
+          <h3>Thesis Project</h3>
+          <p>
+            A full-stack web platform that verifies TESDA certificates and helps
+            connect customers with skilled and certified service providers for
+            home repair, maintenance, and installation services. Features
+            include certificate verification, provider verification, service
+            booking, secure online payments, and booking management.
+          </p>
+          <div class="tech-stack">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>Tailwind CSS</span>
+            <span>JavaScript</span>
+            <span>PHP</span>
+            <span>MySQL</span>
+          </div>
+          <button class="project-link-btn" id="openThesisGalleryBtn">
+            <i class="fas fa-images"></i> Open Thesis Gallery
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY OVERLAY (unified) -->
+    <div class="gallery-overlay" id="galleryOverlay">
+      <div class="gallery-content">
+        <button class="close-gallery" id="closeGalleryBtn">&times;</button>
+        <button class="gallery-nav prev" id="galleryPrev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="gallery-nav next" id="galleryNext">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <img
+          src="b1.png"
+          alt="Gallery render"
+          class="gallery-image"
+          id="galleryImage"
+        />
+        <div class="gallery-counter" id="galleryCounter">1 / 32</div>
+      </div>
+    </div>
+
+    <!-- FOOTER / CONTACT -->
+    <footer class="footer scroll-target" id="contact">
+      <div class="contact-info">
+        <a href="mailto:jonestervillanueva29@gmail.com" class="contact-item">
+          <i class="fas fa-envelope"></i>
+          jonestervillanueva29@gmail.com
+        </a>
+        <a href="tel:+639386143528" class="contact-item">
+          <i class="fas fa-phone"></i>
+          +63 938 614 3528
+        </a>
+      </div>
+      <div class="footer-socials">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <p>© 2026 · built with <i class="fas fa-heart"></i> by Jonester</p>
+    </footer>
+
+    <script>
+      (function () {
+        // ----- PROFILE IMAGE HOVER: change to Bprofile.png -----
+        const profileImg = document.getElementById("profileImg");
+        const profileAvatar = document.getElementById("profileAvatar");
+        const defaultProfile = "pp.jpg";
+        const hoverProfile = "ppb.png";
+
+        if (profileImg) {
+          profileAvatar.addEventListener("mouseenter", function () {
+            profileImg.src = hoverProfile;
+          });
+          profileAvatar.addEventListener("mouseleave", function () {
+            profileImg.src = defaultProfile;
+          });
+        }
+
+        // ----- TYPING ANIMATION -----
+        const typingText = document.getElementById("typingText");
+        if (typingText) {
+          const fullText = "Jonester Villanueva";
+          let charIndex = 0;
+          typingText.textContent = "";
+          function typeWriter() {
+            if (charIndex < fullText.length) {
+              typingText.textContent += fullText.charAt(charIndex);
+              charIndex++;
+              setTimeout(typeWriter, 80);
+            } else {
+              // Keep cursor blinking
+              typingText.style.borderRight = "2px solid #666";
+            }
+          }
+          // Start typing after a small delay
+          setTimeout(typeWriter, 400);
+        }
+
+        // ----- BLENDER: b1.png to b17.png -----
+        const blenderImages = [];
+        for (let i = 1; i <= 17; i++) {
+          blenderImages.push(`b${i}.png`);
+        }
+        // ----- BIAGTAN: bm1.png to bm5.png -----
+        const biagtanImages = [];
+        for (let i = 1; i <= 5; i++) {
+          biagtanImages.push(`bm${i}.png`);
+        }
+        // ----- THESIS: t1.png to t10.png -----
+        const thesisImages = [];
+        for (let i = 1; i <= 10; i++) {
+          thesisImages.push(`t${i}.png`);
+        }
+
+        // ----- GALLERY LOGIC (FIXED: each project has its own set) -----
+        let currentGallerySet = [];
+        let currentIndex = 0;
+        const galleryOverlay = document.getElementById("galleryOverlay");
+        const galleryImage = document.getElementById("galleryImage");
+        const galleryCounter = document.getElementById("galleryCounter");
+        const galleryPrev = document.getElementById("galleryPrev");
+        const galleryNext = document.getElementById("galleryNext");
+        const closeGalleryBtn = document.getElementById("closeGalleryBtn");
+
+        function openGallery(imageSet, startIndex = 0) {
+          currentGallerySet = imageSet;
+          currentIndex = startIndex;
+          updateGallery();
+          galleryOverlay.classList.add("open");
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeGallery() {
+          galleryOverlay.classList.remove("open");
+          document.body.style.overflow = "";
+        }
+
+        function updateGallery() {
+          if (currentGallerySet.length === 0) return;
+          galleryImage.src = currentGallerySet[currentIndex];
+          galleryCounter.textContent = `${currentIndex + 1} / ${currentGallerySet.length}`;
+        }
+
+        function prevImage() {
+          if (currentGallerySet.length === 0) return;
+          currentIndex =
+            (currentIndex - 1 + currentGallerySet.length) %
+            currentGallerySet.length;
+          updateGallery();
+        }
+
+        function nextImage() {
+          if (currentGallerySet.length === 0) return;
+          currentIndex = (currentIndex + 1) % currentGallerySet.length;
+          updateGallery();
+        }
+
+        // Event listeners
+        galleryPrev.addEventListener("click", prevImage);
+        galleryNext.addEventListener("click", nextImage);
+        closeGalleryBtn.addEventListener("click", closeGallery);
+        galleryOverlay.addEventListener("click", (e) => {
+          if (e.target === galleryOverlay) closeGallery();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (!galleryOverlay.classList.contains("open")) return;
+          if (e.key === "Escape") closeGallery();
+          if (e.key === "ArrowLeft") prevImage();
+          if (e.key === "ArrowRight") nextImage();
+        });
+
+        // ----- BUILD SLIDING ROWS -----
+        function buildRow(containerId, imageSet, startOffset = 0) {
+          const container = document.getElementById(containerId);
+          if (!container) return;
+          container.innerHTML = "";
+          const totalCards = 20;
+          const items = [];
+          for (let i = 0; i < totalCards; i++) {
+            const idx = (startOffset + i) % imageSet.length;
+            items.push(imageSet[idx]);
+          }
+          items.forEach((src) => {
+            const card = document.createElement("div");
+            card.className = "project-card";
+            card.innerHTML = `<img src="${src}" alt="render" loading="lazy" />`;
+            // Store the image set and index for this card
+            const imgIndex = imageSet.indexOf(src);
+            card.addEventListener("click", (e) => {
+              e.stopPropagation();
+              openGallery(imageSet, imgIndex);
+            });
+            container.appendChild(card);
+          });
+        }
+
+        // Row 1: Thesis (t1-t10)
+        buildRow("row1", thesisImages, 0);
+        // Row 2: Blender (b1-b17)
+        buildRow("row2", blenderImages, 0);
+        // Row 3: Biagtan (bm1-bm5)
+        buildRow("row3", biagtanImages, 0);
+
+        // ----- TRIGGERS for Blender -----
+        document
+          .getElementById("blenderGalleryTrigger")
+          .addEventListener("click", () => {
+            openGallery(blenderImages, 0);
+          });
+        document
+          .getElementById("openGalleryBtn")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            openGallery(blenderImages, 0);
+          });
+
+        // ----- TRIGGERS for Biagtan -----
+        document
+          .getElementById("biagtanGalleryTrigger")
+          .addEventListener("click", () => {
+            openGallery(biagtanImages, 0);
+          });
+        document
+          .getElementById("openBiagtanGalleryBtn")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            openGallery(biagtanImages, 0);
+          });
+
+        // ----- TRIGGERS for Thesis -----
+        document
+          .getElementById("thesisGalleryTrigger")
+          .addEventListener("click", () => {
+            openGallery(thesisImages, 0);
+          });
+        document
+          .getElementById("openThesisGalleryBtn")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            openGallery(thesisImages, 0);
+          });
+
+        // Update preview images
+        document.getElementById("blenderGalleryPreview").src = "b1.png";
+        document.getElementById("biagtanGalleryPreview").src = "bm1.png";
+        document.getElementById("thesisGalleryPreview").src = "t1.png";
+
+        // ----- HEADER SCROLL -----
+        const header = document.getElementById("mainHeader");
+        window.addEventListener("scroll", () => {
+          header.classList.toggle("scrolled", window.scrollY > 30);
+        });
+
+        // ----- SMOOTH SCROLL -----
+        function smoothScroll(targetId) {
+          const target = document.querySelector(targetId);
+          if (target) {
+            const headerHeight = header.offsetHeight;
+            const targetPosition =
+              target.getBoundingClientRect().top +
+              window.pageYOffset -
+              headerHeight -
+              10;
+            window.scrollTo({ top: targetPosition, behavior: "smooth" });
+          }
+        }
+
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            smoothScroll(this.getAttribute("href"));
+          });
+        });
+
+        document.querySelectorAll(".mobile-link").forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href");
+            closeMenu();
+            setTimeout(() => smoothScroll(targetId), 400);
+          });
+        });
+
+        // ----- HAMBURGER -----
+        const hamburger = document.getElementById("hamburger");
+        const mobileDrawer = document.getElementById("mobileDrawer");
+        const mobileOverlay = document.getElementById("mobileOverlay");
+
+        function openMenu() {
+          hamburger.classList.add("active");
+          mobileDrawer.classList.add("open");
+          mobileOverlay.classList.add("open");
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeMenu() {
+          hamburger.classList.remove("active");
+          mobileDrawer.classList.remove("open");
+          mobileOverlay.classList.remove("open");
+          document.body.style.overflow = "";
+        }
+
+        hamburger.addEventListener("click", () => {
+          mobileDrawer.classList.contains("open") ? closeMenu() : openMenu();
+        });
+        mobileOverlay.addEventListener("click", closeMenu);
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && mobileDrawer.classList.contains("open"))
+            closeMenu();
+        });
+
+        // ----- FADE ANIMATION -----
+        const projectItems = document.querySelectorAll(".project-item");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const el = entry.target;
+                const fade = el.getAttribute("data-fade") || "up";
+                el.style.transition =
+                  "opacity 0.9s cubic-bezier(0.23, 1, 0.32, 1), transform 0.9s cubic-bezier(0.23, 1, 0.32, 1)";
+                el.style.transform =
+                  fade === "down" ? "translateY(-40px)" : "translateY(40px)";
+                el.style.opacity = "0";
+                void el.offsetWidth;
+                el.classList.add("visible");
+                el.style.transform = "translateY(0)";
+                el.style.opacity = "1";
+                observer.unobserve(el);
+              }
+            });
+          },
+          { threshold: 0.2, rootMargin: "0px 0px -40px 0px" },
+        );
+
+        projectItems.forEach((item) => {
+          const fade = item.getAttribute("data-fade") || "up";
+          item.style.opacity = "0";
+          item.style.transform =
+            fade === "down" ? "translateY(-40px)" : "translateY(40px)";
+          item.style.transition =
+            "opacity 0.9s cubic-bezier(0.23, 1, 0.32, 1), transform 0.9s cubic-bezier(0.23, 1, 0.32, 1)";
+          observer.observe(item);
+        });
+
+        setTimeout(() => {
+          projectItems.forEach((item) => {
+            const rect = item.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 60 && rect.bottom > 0) {
+              observer.unobserve(item);
+              item.style.transform = "translateY(0)";
+              item.style.opacity = "1";
+              item.classList.add("visible");
+            }
+          });
+        }, 100);
+      })();
+    </script>
+  </body>
+</html>
