@@ -1096,7 +1096,7 @@
     <section class="projects-section scroll-target" id="projects">
       <h2 class="section-heading">projects</h2>
 
-      <!-- Project 1: Blender Gallery (with extra images) -->
+      <!-- Project 1: Blender Gallery (with computer.png as first display) -->
       <div class="project-item" data-fade="up">
         <div class="project-image" id="blenderGalleryTrigger">
           <img
@@ -1220,7 +1220,7 @@
           class="gallery-image"
           id="galleryImage"
         />
-        <div class="gallery-counter" id="galleryCounter">1 / 32</div>
+        <div class="gallery-counter" id="galleryCounter">1 / 21</div>
       </div>
     </div>
 
@@ -1380,7 +1380,6 @@
             const card = document.createElement("div");
             card.className = "project-card";
             card.innerHTML = `<img src="${src}" alt="render" loading="lazy" />`;
-            // Find index in the full blenderImages set
             const targetSet = imageSet;
             const imgIndex = targetSet.indexOf(src);
             card.addEventListener("click", (e) => {
@@ -1393,7 +1392,7 @@
 
         // Row 1: Thesis (no extra)
         buildRow("row1", thesisImages, [], 0);
-        // Row 2: Blender (with extra images: computer, computerset, systemunit, keyboard)
+        // Row 2: Blender (with extra images)
         buildRow("row2", blenderImages, extraBlender, 0);
         // Row 3: Biagtan (no extra)
         buildRow("row3", biagtanImages, [], 0);
@@ -1437,8 +1436,8 @@
             openGallery(thesisImages, 0);
           });
 
-        // Update preview images
-        document.getElementById("blenderGalleryPreview").src = "b1.png";
+        // Update preview images - Blender now shows computer.png
+        document.getElementById("blenderGalleryPreview").src = "computer.png";
         document.getElementById("biagtanGalleryPreview").src = "bm1.png";
         document.getElementById("thesisGalleryPreview").src = "t1.png";
 
@@ -1554,4 +1553,4 @@
       })();
     </script>
   </body>
-</html>
+</html>F
