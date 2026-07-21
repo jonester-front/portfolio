@@ -1079,7 +1079,7 @@
       </div>
     </section>
 
-    <!-- SLIDING ROWS: now includes computer.png in front of each row -->
+    <!-- SLIDING ROWS: only Blender row (row2) gets the three extra images -->
     <section class="hero-rows" id="work">
       <div class="row-wrapper">
         <div class="row-track right-to-left" id="row1"></div>
@@ -1279,27 +1279,27 @@
               typingText.style.borderRight = "2px solid #666";
             }
           }
-          // Start typing after a small delay
           setTimeout(typeWriter, 400);
         }
 
-        // ----- BLENDER: b1.png to b17.png -----
+        // ----- IMAGE SETS -----
         const blenderImages = [];
         for (let i = 1; i <= 17; i++) {
           blenderImages.push(`b${i}.png`);
         }
-        // ----- BIAGTAN: bm1.png to bm5.png -----
         const biagtanImages = [];
         for (let i = 1; i <= 5; i++) {
           biagtanImages.push(`bm${i}.png`);
         }
-        // ----- THESIS: t1.png to t10.png -----
         const thesisImages = [];
         for (let i = 1; i <= 10; i++) {
           thesisImages.push(`t${i}.png`);
         }
 
-        // ----- GALLERY LOGIC (FIXED: each project has its own set) -----
+        // Extra images for Blender row only
+        const extraBlenderImages = ["computerset.png", "systemunit.png", "keyboard.png"];
+
+        // ----- GALLERY LOGIC -----
         let currentGallerySet = [];
         let currentIndex = 0;
         const galleryOverlay = document.getElementById("galleryOverlay");
@@ -1342,7 +1342,6 @@
           updateGallery();
         }
 
-        // Event listeners
         galleryPrev.addEventListener("click", prevImage);
         galleryNext.addEventListener("click", nextImage);
         closeGalleryBtn.addEventListener("click", closeGallery);
@@ -1356,16 +1355,19 @@
           if (e.key === "ArrowRight") nextImage();
         });
 
-        // ----- BUILD SLIDING ROWS (with computer.png in front) -----
-        function buildRow(containerId, imageSet, startOffset = 0) {
+        // ----- BUILD SLIDING ROWS -----
+        function buildRow(containerId, imageSet, extraImages = [], startOffset = 0) {
           const container = document.getElementById(containerId);
           if (!container) return;
           container.innerHTML = "";
           const totalCards = 20;
           const items = [];
-          // Insert computer.png at the very front
-          items.push("computer.png");
-          for (let i = 0; i < totalCards - 1; i++) {
+          // Prepend extra images if any (for Blender row)
+          if (extraImages.length) {
+            items.push(...extraImages);
+          }
+          // Fill the rest with the image set
+          for (let i = 0; i < totalCards - extraImages.length; i++) {
             const idx = (startOffset + i) % imageSet.length;
             items.push(imageSet[idx]);
           }
@@ -1375,32 +1377,27 @@
             const card = document.createElement("div");
             card.className = "project-card";
             card.innerHTML = `<img src="${src}" alt="render" loading="lazy" />`;
-            // Determine which set this image belongs to for gallery click
             let targetSet = imageSet;
-            if (src === "computer.png") {
-              // For computer.png, use the gallery set of the row (first image set)
+            let imgIndex = targetSet.indexOf(src);
+            // If src is an extra image, open gallery with the main image set
+            if (extraImages.includes(src)) {
               targetSet = imageSet;
+              imgIndex = 0;
             }
-            const imgIndex = targetSet.indexOf(src);
             card.addEventListener("click", (e) => {
               e.stopPropagation();
-              if (src === "computer.png") {
-                // Open gallery with the row's image set starting from index 0
-                openGallery(imageSet, 0);
-              } else {
-                openGallery(imageSet, imgIndex >= 0 ? imgIndex : 0);
-              }
+              openGallery(targetSet, imgIndex >= 0 ? imgIndex : 0);
             });
             container.appendChild(card);
           });
         }
 
-        // Row 1: Thesis (t1-t10) with computer.png in front
-        buildRow("row1", thesisImages, 0);
-        // Row 2: Blender (b1-b17) with computer.png in front
-        buildRow("row2", blenderImages, 0);
-        // Row 3: Biagtan (bm1-bm5) with computer.png in front
-        buildRow("row3", biagtanImages, 0);
+        // Row 1: Thesis (no extra)
+        buildRow("row1", thesisImages, [], 0);
+        // Row 2: Blender (with extra images: computerset, systemunit, keyboard)
+        buildRow("row2", blenderImages, extraBlenderImages, 0);
+        // Row 3: Biagtan (no extra)
+        buildRow("row3", biagtanImages, [], 0);
 
         // ----- TRIGGERS for Blender -----
         document
