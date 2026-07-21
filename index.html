@@ -1059,7 +1059,7 @@
     <span>HTML &amp; CSS</span>
     <span>Tailwind CSS</span>
     <span>MySQL</span>
-    <span>C#</span>
+    <span>Lua (Basic)</span>
     <span>Blender (Basic)</span>
 </div>
           <div class="about-socials">
@@ -1079,7 +1079,7 @@
       </div>
     </section>
 
-    <!-- SLIDING ROWS: only Blender row (row2) gets the three extra images -->
+    <!-- SLIDING ROWS -->
     <section class="hero-rows" id="work">
       <div class="row-wrapper">
         <div class="row-track right-to-left" id="row1"></div>
@@ -1096,7 +1096,7 @@
     <section class="projects-section scroll-target" id="projects">
       <h2 class="section-heading">projects</h2>
 
-      <!-- Project 1: Blender Gallery -->
+      <!-- Project 1: Blender Gallery (with extra images) -->
       <div class="project-item" data-fade="up">
         <div class="project-image" id="blenderGalleryTrigger">
           <img
@@ -1204,7 +1204,7 @@
       </div>
     </section>
 
-    <!-- GALLERY OVERLAY (unified) -->
+    <!-- GALLERY OVERLAY -->
     <div class="gallery-overlay" id="galleryOverlay">
       <div class="gallery-content">
         <button class="close-gallery" id="closeGalleryBtn">&times;</button>
@@ -1248,7 +1248,7 @@
 
     <script>
       (function () {
-        // ----- PROFILE IMAGE HOVER: change to Bprofile.png -----
+        // ----- PROFILE IMAGE HOVER -----
         const profileImg = document.getElementById("profileImg");
         const profileAvatar = document.getElementById("profileAvatar");
         const defaultProfile = "pp.jpg";
@@ -1275,7 +1275,6 @@
               charIndex++;
               setTimeout(typeWriter, 80);
             } else {
-              // Keep cursor blinking
               typingText.style.borderRight = "2px solid #666";
             }
           }
@@ -1283,10 +1282,16 @@
         }
 
         // ----- IMAGE SETS -----
-        const blenderImages = [];
+        // Base Blender images: b1-b17
+        const blenderBase = [];
         for (let i = 1; i <= 17; i++) {
-          blenderImages.push(`b${i}.png`);
+          blenderBase.push(`b${i}.png`);
         }
+        // Extra images for Blender (computer.png, computerset.png, systemunit.png, keyboard.png)
+        const extraBlender = ["computer.png", "computerset.png", "systemunit.png", "keyboard.png"];
+        // Full Blender gallery: extra images first, then base images
+        const blenderImages = [...extraBlender, ...blenderBase];
+
         const biagtanImages = [];
         for (let i = 1; i <= 5; i++) {
           biagtanImages.push(`bm${i}.png`);
@@ -1295,9 +1300,6 @@
         for (let i = 1; i <= 10; i++) {
           thesisImages.push(`t${i}.png`);
         }
-
-        // Extra images for Blender row only
-        const extraBlenderImages = ["computerset.png", "systemunit.png", "keyboard.png"];
 
         // ----- GALLERY LOGIC -----
         let currentGallerySet = [];
@@ -1362,14 +1364,15 @@
           container.innerHTML = "";
           const totalCards = 20;
           const items = [];
-          // Prepend extra images if any (for Blender row)
+          // Prepend extra images if any
           if (extraImages.length) {
             items.push(...extraImages);
           }
           // Fill the rest with the image set
+          const baseSet = imageSet.filter(img => !extraImages.includes(img));
           for (let i = 0; i < totalCards - extraImages.length; i++) {
-            const idx = (startOffset + i) % imageSet.length;
-            items.push(imageSet[idx]);
+            const idx = (startOffset + i) % baseSet.length;
+            items.push(baseSet[idx]);
           }
           // Duplicate for seamless loop
           const fullItems = [...items, ...items];
@@ -1379,9 +1382,8 @@
             card.innerHTML = `<img src="${src}" alt="render" loading="lazy" />`;
             let targetSet = imageSet;
             let imgIndex = targetSet.indexOf(src);
-            // If src is an extra image, open gallery with the main image set
-            if (extraImages.includes(src)) {
-              targetSet = imageSet;
+            if (imgIndex === -1) {
+              // fallback: use first image
               imgIndex = 0;
             }
             card.addEventListener("click", (e) => {
@@ -1394,12 +1396,12 @@
 
         // Row 1: Thesis (no extra)
         buildRow("row1", thesisImages, [], 0);
-        // Row 2: Blender (with extra images: computerset, systemunit, keyboard)
-        buildRow("row2", blenderImages, extraBlenderImages, 0);
+        // Row 2: Blender (with extra images: computer, computerset, systemunit, keyboard)
+        buildRow("row2", blenderImages, extraBlender, 0);
         // Row 3: Biagtan (no extra)
         buildRow("row3", biagtanImages, [], 0);
 
-        // ----- TRIGGERS for Blender -----
+        // ----- TRIGGERS for Blender (use full blenderImages) -----
         document
           .getElementById("blenderGalleryTrigger")
           .addEventListener("click", () => {
