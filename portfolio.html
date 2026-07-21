@@ -1059,7 +1059,7 @@
     <span>HTML &amp; CSS</span>
     <span>Tailwind CSS</span>
     <span>MySQL</span>
-    <span>Lua (Basic)</span>
+    <span>C#</span>
     <span>Blender (Basic)</span>
 </div>
           <div class="about-socials">
@@ -1380,12 +1380,9 @@
             const card = document.createElement("div");
             card.className = "project-card";
             card.innerHTML = `<img src="${src}" alt="render" loading="lazy" />`;
-            let targetSet = imageSet;
-            let imgIndex = targetSet.indexOf(src);
-            if (imgIndex === -1) {
-              // fallback: use first image
-              imgIndex = 0;
-            }
+            // Find index in the full blenderImages set
+            const targetSet = imageSet;
+            const imgIndex = targetSet.indexOf(src);
             card.addEventListener("click", (e) => {
               e.stopPropagation();
               openGallery(targetSet, imgIndex >= 0 ? imgIndex : 0);
