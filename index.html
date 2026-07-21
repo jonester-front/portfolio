@@ -1017,12 +1017,8 @@
       <a href="#projects" class="mobile-link">Projects</a>
       <a href="#contact" class="mobile-link">Contact</a>
       <div class="drawer-socials">
-        <a href="https://www.facebook.com/mate.viter/" aria-label="Facebook"
-          ><i class="fab fa-facebook-f"></i
-        ></a>
-        <a href="https://www.tiktok.com/@kurapika7792" aria-label="TikTok"
-          ><i class="fab fa-tiktok"></i
-        ></a>
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
         <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
         <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
@@ -1063,16 +1059,14 @@
     <span>HTML &amp; CSS</span>
     <span>Tailwind CSS</span>
     <span>MySQL</span>
-    <span>Lua (Basic)</span>
+    <span>C#</span>
     <span>Blender (Basic)</span>
 </div>
           <div class="about-socials">
-            <a href="https://www.facebook.com/mate.viter/" aria-label="Facebook"
+            <a href="#" aria-label="Facebook"
               ><i class="fab fa-facebook-f"></i
             ></a>
-            <a href="https://www.tiktok.com/@kurapika7792" aria-label="TikTok"
-              ><i class="fab fa-tiktok"></i
-            ></a>
+            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
             <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
             <a href="#" aria-label="Instagram"
               ><i class="fab fa-instagram"></i
@@ -1085,7 +1079,7 @@
       </div>
     </section>
 
-    <!-- SLIDING ROWS: Row1 = Thesis (t1-t10), Row2 = Blender (b1-b17), Row3 = Biagtan (bm1-bm5) -->
+    <!-- SLIDING ROWS: now includes computer.png in front of each row -->
     <section class="hero-rows" id="work">
       <div class="row-wrapper">
         <div class="row-track right-to-left" id="row1"></div>
@@ -1243,12 +1237,8 @@
         </a>
       </div>
       <div class="footer-socials">
-        <a href="https://www.facebook.com/mate.viter/" aria-label="Facebook"
-          ><i class="fab fa-facebook-f"></i
-        ></a>
-        <a href="https://www.tiktok.com/@kurapika7792" aria-label="TikTok"
-          ><i class="fab fa-tiktok"></i
-        ></a>
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
         <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
         <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
@@ -1366,36 +1356,50 @@
           if (e.key === "ArrowRight") nextImage();
         });
 
-        // ----- BUILD SLIDING ROWS -----
+        // ----- BUILD SLIDING ROWS (with computer.png in front) -----
         function buildRow(containerId, imageSet, startOffset = 0) {
           const container = document.getElementById(containerId);
           if (!container) return;
           container.innerHTML = "";
           const totalCards = 20;
           const items = [];
-          for (let i = 0; i < totalCards; i++) {
+          // Insert computer.png at the very front
+          items.push("computer.png");
+          for (let i = 0; i < totalCards - 1; i++) {
             const idx = (startOffset + i) % imageSet.length;
             items.push(imageSet[idx]);
           }
-          items.forEach((src) => {
+          // Duplicate for seamless loop
+          const fullItems = [...items, ...items];
+          fullItems.forEach((src) => {
             const card = document.createElement("div");
             card.className = "project-card";
             card.innerHTML = `<img src="${src}" alt="render" loading="lazy" />`;
-            // Store the image set and index for this card
-            const imgIndex = imageSet.indexOf(src);
+            // Determine which set this image belongs to for gallery click
+            let targetSet = imageSet;
+            if (src === "computer.png") {
+              // For computer.png, use the gallery set of the row (first image set)
+              targetSet = imageSet;
+            }
+            const imgIndex = targetSet.indexOf(src);
             card.addEventListener("click", (e) => {
               e.stopPropagation();
-              openGallery(imageSet, imgIndex);
+              if (src === "computer.png") {
+                // Open gallery with the row's image set starting from index 0
+                openGallery(imageSet, 0);
+              } else {
+                openGallery(imageSet, imgIndex >= 0 ? imgIndex : 0);
+              }
             });
             container.appendChild(card);
           });
         }
 
-        // Row 1: Thesis (t1-t10)
+        // Row 1: Thesis (t1-t10) with computer.png in front
         buildRow("row1", thesisImages, 0);
-        // Row 2: Blender (b1-b17)
+        // Row 2: Blender (b1-b17) with computer.png in front
         buildRow("row2", blenderImages, 0);
-        // Row 3: Biagtan (bm1-bm5)
+        // Row 3: Biagtan (bm1-bm5) with computer.png in front
         buildRow("row3", biagtanImages, 0);
 
         // ----- TRIGGERS for Blender -----
